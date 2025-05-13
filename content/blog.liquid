@@ -6,5 +6,5 @@ const eleventyNavigation = {
 ---
 <h1>Archive</h1>
 
-{% set postslist = collections.posts %}
-{% include "postslist.njk" %}
+{% assign postslist = collections.posts %}
+{% include "postslist.liquid" %}

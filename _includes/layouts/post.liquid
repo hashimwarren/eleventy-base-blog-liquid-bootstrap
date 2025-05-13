@@ -1,0 +1,21 @@
+---
+layout: layouts/base.liquid
+---
+{% comment %} Only include the syntax highlighter CSS on blog posts, included with the CSS per-page bundle {% endcomment %}
+<link rel="stylesheet" href="/css/prism-diff.css">
+<h1>{{ title }}</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="{{ page.date | date_to_string }}">{{ page.date | date: "%B %d, %Y" }}</time></li>
+	{% for tag in tags | filterTagList %}
+	{% assign tagUrl = "/tags/" | append: tag | append: "/" %}
+	<li><a href="{{ tagUrl }}" class="post-tag">{{ tag }}</a>{% if forloop.last == false %}, {% endif %}</li>
+	{% endfor %}
+</ul>
+
+{{ content }}
+
+{% if collections.posts %}
+{% assign previousPost = collections.posts | getPreviousCollectionItem %}
+{% assign nextPost = collections.posts | getNextCollectionItem %}
+{% endif %}
