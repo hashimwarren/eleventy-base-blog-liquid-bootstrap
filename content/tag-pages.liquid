@@ -19,7 +19,7 @@ const eleventyComputed = {
 ---
 <h1>Tagged “{{ tag }}”</h1>
 
-{% set postslist = collections[ tag ] %}
-{% include "postslist.njk" %}
+{% assign postslist = collections[tag] %}
+{% include "postslist.liquid" %}
 
-<p>See <a href="tags.njk">all tags</a>.</p>
+<p>See <a href="tags.liquid">all tags</a>.</p>

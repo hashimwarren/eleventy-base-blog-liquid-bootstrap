@@ -1,5 +1,5 @@
 import { IdAttributePlugin, InputPathToUrlTransformPlugin, HtmlBasePlugin } from "@11ty/eleventy";
-import { feedPlugin } from "@11ty/eleventy-plugin-rss";
+import { feedPlugin, dateToRfc3339, absoluteUrl } from "@11ty/eleventy-plugin-rss";
 import pluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
@@ -115,6 +115,10 @@ export default async function(eleventyConfig) {
 		return (new Date()).toISOString();
 	});
 
+	// Add custom Liquid filters for RSS
+	eleventyConfig.addFilter("dateToRfc3339", dateToRfc3339);
+	eleventyConfig.addFilter("absoluteUrl", absoluteUrl);
+
 	// Features to make your build faster (when you need them)
 
 	// If your passthrough copy gets heavy and cumbersome, add this line
@@ -127,19 +131,20 @@ export default async function(eleventyConfig) {
 export const config = {
 	// Control which files Eleventy will process
 	// e.g.: *.md, *.njk, *.html, *.liquid
+	// Keep Nunjucks in templateFormats for RSS plugin compatibility
 	templateFormats: [
 		"md",
-		"njk",
+		"njk", // Required for RSS plugin
 		"html",
 		"liquid",
 		"11ty.js",
 	],
 
 	// Pre-process *.md files with: (default: `liquid`)
-	markdownTemplateEngine: "njk",
+	markdownTemplateEngine: "liquid",
 
 	// Pre-process *.html files with: (default: `liquid`)
-	htmlTemplateEngine: "njk",
+	htmlTemplateEngine: "liquid",
 
 	// These are all optional:
 	dir: {
