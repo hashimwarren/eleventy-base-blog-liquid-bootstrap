@@ -14,6 +14,19 @@ const numberOfLatestPostsToShow = 3;
 {% assign postslistCounter = postsCount %}
 {% include "postslist.liquid" %}
 
+<!-- Example Button Integration -->
+{% include "components/button.liquid" with {
+  label: "Learn More",
+  url: "/about/",
+  type: "btn-outline-primary"
+} %}
+
+<!-- Example Alert Integration -->
+{% include "components/alert.liquid" with {
+  type: "success",
+  message: "Welcome to the Eleventy Base Blog!"
+} %}
+
 {% assign morePosts = postsCount | minus: numberOfLatestPostsToShow %}
 {% if morePosts > 0 %}
 <p>{{ morePosts }} more post{% if morePosts != 1 %}s{% endif %} can be found in <a href="blog.liquid">the archive</a>.</p>

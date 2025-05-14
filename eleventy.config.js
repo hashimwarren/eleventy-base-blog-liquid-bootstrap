@@ -6,6 +6,11 @@ import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
 import pluginFilters from "./_config/filters.js";
 
+// Configure Eleventy to process SCSS directly
+import sass from "sass";
+import fs from "fs";
+import path from "path";
+
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 export default async function(eleventyConfig) {
 	// Drafts, see also _data/eleventyDataSchema.js
@@ -22,6 +27,11 @@ export default async function(eleventyConfig) {
 			"./public/": "/"
 		})
 		.addPassthroughCopy("./content/feed/pretty-atom-feed.xsl");
+
+	// Add passthrough copy for Bootstrap JS files
+	eleventyConfig.addPassthroughCopy({
+		"./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js": "js/bootstrap.bundle.min.js"
+	});
 
 	// Run Eleventy when these files change:
 	// https://www.11ty.dev/docs/watch-serve/#add-your-own-watch-targets
@@ -126,44 +136,47 @@ export default async function(eleventyConfig) {
 	// https://www.11ty.dev/docs/copy/#emulate-passthrough-copy-during-serve
 
 	// eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
-};
 
-export const config = {
-	// Control which files Eleventy will process
-	// e.g.: *.md, *.njk, *.html, *.liquid
-	// Keep Nunjucks in templateFormats for RSS plugin compatibility
-	templateFormats: [
-		"md",
-		"njk", // Required for RSS plugin
-		"html",
-		"liquid",
-		"11ty.js",
-	],
+	eleventyConfig.addWatchTarget("./css/");
 
-	// Pre-process *.md files with: (default: `liquid`)
-	markdownTemplateEngine: "liquid",
+	eleventyConfig.on("beforeBuild", () => {
+		const scssInputPath = "./css/_custom.scss"; // Source SCSS file
+		const cssOutputPath = "./_site/css/bootstrap.css"; // Destination CSS file
 
-	// Pre-process *.html files with: (default: `liquid`)
-	htmlTemplateEngine: "liquid",
+		// Ensure the input SCSS file exists
+		if (!fs.existsSync(scssInputPath)) {
+			console.warn(`[SCSS] Input file not found: ${scssInputPath}. Skipping SCSS compilation.`);
+			return;
+		}
 
-	// These are all optional:
-	dir: {
-		input: "content",          // default: "."
-		includes: "../_includes",  // default: "_includes" (`input` relative)
-		data: "../_data",          // default: "_data" (`input` relative)
-		output: "_site"
-	},
+		try {
+			const result = sass.renderSync({
+				file: scssInputPath,
+				outputStyle: "compressed",
+			});
+			const outputDir = cssOutputPath.substring(0, cssOutputPath.lastIndexOf('/'));
+			if (!fs.existsSync(outputDir)) {
+				fs.mkdirSync(outputDir, { recursive: true });
+			}
+			fs.writeFileSync(cssOutputPath, result.css);
+			console.log(`[SCSS] Compiled ${scssInputPath} to ${cssOutputPath}`);
+		} catch (error) {
+			console.error(`[SCSS] Error compiling ${scssInputPath}: ${error}`);
+		}
+	});
 
-	// -----------------------------------------------------------------
-	// Optional items:
-	// -----------------------------------------------------------------
+	const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-	// If your site deploys to a subdirectory, change `pathPrefix`.
-	// Read more: https://www.11ty.dev/docs/config/#deploy-to-a-subdirectory-with-a-path-prefix
-
-	// When paired with the HTML <base> plugin https://www.11ty.dev/docs/plugins/html-base/
-	// it will transform any absolute URLs in your HTML to include this
-	// folder name and does **not** affect where things go in the output folder.
-
-	// pathPrefix: "/",
+	return {
+		dir: {
+			input: "content",
+			includes: "_includes",
+			layouts: "_includes/layouts",
+			data: "_data",
+			output: "_site"
+		},
+		templateFormats: ["liquid", "md", "html", "njk"],
+		htmlTemplateEngine: "liquid",
+		markdownTemplateEngine: "liquid"
+	};
 };

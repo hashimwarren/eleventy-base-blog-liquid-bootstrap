@@ -7,6 +7,18 @@
 		<meta name="description" content="{{ description | default: metadata.description }}">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
 
+		<!-- Include Bootstrap CSS -->
+		<link rel="stylesheet" href="/css/bootstrap.css">
+
+		<!-- Include Bootstrap JS -->
+		<script src="/js/bootstrap.bundle.min.js" defer></script>
+
+		<!-- Add viewport meta tag -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Use async loading for web fonts -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" async>
+
 		{% comment %} Uncomment this if you’d like folks to know that you used Eleventy to build your site! {% endcomment %}
 		{% comment %} <meta name="generator" content="{{ eleventy.generator }}"> {% endcomment %}
 
@@ -22,6 +34,14 @@
 		{% endcomment %}
 	</head>
 	<body>
-		{{ content }}
+		<!-- Include Navbar -->
+		{% include "components/navbar.liquid" %}
+		<!-- Include Sidebar -->
+		{% include "components/sidebar.liquid" %}
+		<div class="container-lg">
+			{{ content }}
+		</div>
+		<!-- Include Footer -->
+		{% include "components/footer.liquid" %}
 	</body>
 </html>

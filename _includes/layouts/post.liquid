@@ -1,9 +1,18 @@
 ---
-layout: layouts/base.liquid
+layout: base.liquid
 ---
 {% comment %} Only include the syntax highlighter CSS on blog posts, included with the CSS per-page bundle {% endcomment %}
-<link rel="stylesheet" href="/css/prism-diff.css">
+<!-- Removed reference to prism-diff.css -->
 <h1>{{ title }}</h1>
+
+<!-- Example Breadcrumb Integration -->
+{% include "components/breadcrumb.liquid" with {
+  breadcrumbs: [
+    { label: "Home", url: "/" },
+    { label: "Blog", url: "/blog/" },
+    { label: title }
+  ]
+} %}
 
 <ul class="post-metadata">
 	<li><time datetime="{{ page.date | date_to_string }}">{{ page.date | date: "%B %d, %Y" }}</time></li>

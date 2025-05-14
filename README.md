@@ -78,6 +78,47 @@ Or you can run [debug mode](https://www.11ty.dev/docs/debugging/) to see all the
 	- Zero-maintenance tag pages ([View on the Demo](https://eleventy-base-blog.netlify.app/tags/))
 	- Content not found (404) page
 
+## Bootstrap Integration
+
+This project integrates Bootstrap 5 for styling and layout. Below are the key details:
+
+### Features
+
+* Responsive navigation menu with collapsible mobile support.
+* Blog post cards with featured image support and metadata styling.
+* Pagination, breadcrumbs, and badges for enhanced navigation.
+* Alerts and forms styled with Bootstrap utilities.
+
+### Custom Components
+
+* `navbar.liquid`: Responsive navigation menu.
+* `card.liquid`: Blog post cards.
+* `pagination.liquid`: Pagination controls.
+* `breadcrumb.liquid`: Breadcrumb navigation.
+* `badge.liquid`: Tag badges.
+* `alert.liquid`: Alerts for special messages.
+* `form.liquid`: Styled forms.
+
+### Class Naming Conventions
+
+* Use `btn-*` for buttons (e.g., `btn-primary`, `btn-outline-secondary`).
+* Use `card-*` for card components (e.g., `card-title`, `card-text`).
+* Use `alert-*` for alerts (e.g., `alert-success`, `alert-danger`).
+* Use `navbar-*` for navigation (e.g., `navbar-light`, `navbar-dark`).
+* Use `badge-*` for badges (e.g., `badge-primary`, `badge-secondary`).
+
+Follow Bootstrap's utility class naming conventions for spacing, typography, and layout.
+
+### Usage Examples
+
+Refer to the `_includes/components/` directory for reusable components. Each component is documented with usage examples.
+
+### Customization
+
+* Modify `css/bootstrap.css` to include or exclude Bootstrap components.
+* Use `purgecss.config.js` to minimize unused CSS.
+* Update SCSS variables in `css/bootstrap.css` for theme customization.
+
 ## Demos
 
 - [Netlify](https://eleventy-base-blog.netlify.app/)

@@ -1,0 +1,25 @@
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    {% if pagination.previousPage %}
+    <li class="page-item">
+      <a class="page-link" href="{{ pagination.previousPage.url }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% endif %}
+
+    {% for page in pagination.pages %}
+    <li class="page-item {% if page.url == pagination.href %}active{% endif %}">
+      <a class="page-link" href="{{ page.url }}">{{ forloop.index }}</a>
+    </li>
+    {% endfor %}
+
+    {% if pagination.nextPage %}
+    <li class="page-item">
+      <a class="page-link" href="{{ pagination.nextPage.url }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>

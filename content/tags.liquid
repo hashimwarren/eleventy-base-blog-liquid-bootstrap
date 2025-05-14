@@ -1,8 +1,16 @@
 <h1>Tags</h1>
 
+<!-- Example Badge Integration -->
 <ul>
 {% for tag in collections | keys | filterTagList | sortAlphabetically %}
-	{% assign tagUrl = "/tags/" | append: tag | append: "/" %}
-	<li><a href="{{ tagUrl }}" class="post-tag">{{ tag }}</a></li>
+  {% assign tagUrl = "/tags/" | append: tag | append: "/" %}
+  <li>
+    <a href="{{ tagUrl }}">
+      {% include "components/badge.liquid" with {
+        label: tag,
+        type: "secondary"
+      } %}
+    </a>
+  </li>
 {% endfor %}
 </ul>
