@@ -1,3 +1,3 @@
 export default {
-	layout: "layouts/home.liquid",
+	layout: "home.liquid" // Path relative to the dir.layouts setting in eleventy.config.js
 };

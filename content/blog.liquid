@@ -8,3 +8,6 @@ const eleventyNavigation = {
 
 {% assign postslist = collections.posts %}
 {% include "postslist.liquid" %}
+
+<!-- Include Pagination -->
+{% include "components/pagination.liquid" with pagination %}
