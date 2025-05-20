@@ -1,3 +1,24 @@
-<span class="badge bg-{{ type | default: 'primary' }}">
+{% assign type = type | default: 'primary' %}
+{% assign base_classes = "text-xs font-semibold px-2.5 py-0.5 rounded" %}
+
+{% if type == 'primary' %}
+  <span class="bg-blue-500 text-white {{ base_classes }}">
+{% elsif type == 'secondary' %}
+  <span class="bg-gray-500 text-white {{ base_classes }}">
+{% elsif type == 'success' %}
+  <span class="bg-green-500 text-white {{ base_classes }}">
+{% elsif type == 'danger' %}
+  <span class="bg-red-500 text-white {{ base_classes }}">
+{% elsif type == 'warning' %}
+  <span class="bg-yellow-500 text-black {{ base_classes }}">
+{% elsif type == 'info' %}
+  <span class="bg-blue-400 text-white {{ base_classes }}">
+{% elsif type == 'light' %}
+  <span class="bg-gray-100 text-gray-800 {{ base_classes }}">
+{% elsif type == 'dark' %}
+  <span class="bg-gray-800 text-white {{ base_classes }}">
+{% else %}
+  <span class="bg-blue-500 text-white {{ base_classes }}">
+{% endif %}
   {{ label | default: 'Badge' }}
 </span>

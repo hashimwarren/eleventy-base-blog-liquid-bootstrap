@@ -1,10 +1,10 @@
-<div class="card" style="width: 18rem;">
+<div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
   {% if image %}
-  <img src="{{ image }}" class="card-img-top" alt="{{ title }}" loading="lazy">
+  <img src="{{ image }}" class="w-full h-48 object-cover" alt="{{ title }}" loading="lazy">
   {% endif %}
-  <div class="card-body">
-    <h5 class="card-title">{{ title }}</h5>
-    <p class="card-text">{{ description }}</p>
-    <a href="{{ url }}" class="btn btn-primary">Read More</a>
+  <div class="px-6 py-4">
+    <h5 class="font-bold text-xl mb-2">{{ title }}</h5>
+    <p class="text-gray-700 text-base mb-4">{{ description }}</p>
+    {% include "components/button.liquid", url: url, label: "Read More", type: "btn-primary" %}
   </div>
 </div>

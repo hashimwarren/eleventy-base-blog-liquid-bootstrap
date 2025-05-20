@@ -6,11 +6,6 @@ import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
 import pluginFilters from "./_config/filters.js";
 
-// Configure Eleventy to process SCSS directly
-import sass from "sass";
-import fs from "fs";
-import path from "path";
-
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 export default async function(eleventyConfig) {
 	// Drafts, see also _data/eleventyDataSchema.js
@@ -28,18 +23,14 @@ export default async function(eleventyConfig) {
 		})
 		.addPassthroughCopy("./content/feed/pretty-atom-feed.xsl");
 
-	// Add passthrough copy for Bootstrap JS files
-	eleventyConfig.addPassthroughCopy({
-		"./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js": "js/bootstrap.bundle.min.js"
-	});
-
 	// Run Eleventy when these files change:
 	// https://www.11ty.dev/docs/watch-serve/#add-your-own-watch-targets
 
 	// Watch CSS files
-	eleventyConfig.addWatchTarget("css/**/*.css");
+	eleventyConfig.addWatchTarget("css/tailwind.css"); // Updated to watch tailwind.css
 	// Watch images for the image pipeline.
 	eleventyConfig.addWatchTarget("content/**/*.{svg,webp,png,jpg,jpeg,gif}");
+	eleventyConfig.addPassthroughCopy("css/style.css"); // Add passthrough for generated style.css
 
 	// Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
 	// Bundle <style> content and adds a {% css %} paired shortcode
@@ -136,36 +127,6 @@ export default async function(eleventyConfig) {
 	// https://www.11ty.dev/docs/copy/#emulate-passthrough-copy-during-serve
 
 	// eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
-
-	eleventyConfig.addWatchTarget("./css/");
-
-	eleventyConfig.on("beforeBuild", () => {
-		const scssInputPath = "./css/_custom.scss"; // Source SCSS file
-		const cssOutputPath = "./_site/css/bootstrap.css"; // Destination CSS file
-
-		// Ensure the input SCSS file exists
-		if (!fs.existsSync(scssInputPath)) {
-			console.warn(`[SCSS] Input file not found: ${scssInputPath}. Skipping SCSS compilation.`);
-			return;
-		}
-
-		try {
-			const result = sass.renderSync({
-				file: scssInputPath,
-				outputStyle: "compressed",
-			});
-			const outputDir = cssOutputPath.substring(0, cssOutputPath.lastIndexOf('/'));
-			if (!fs.existsSync(outputDir)) {
-				fs.mkdirSync(outputDir, { recursive: true });
-			}
-			fs.writeFileSync(cssOutputPath, result.css);
-			console.log(`[SCSS] Compiled ${scssInputPath} to ${cssOutputPath}`);
-		} catch (error) {
-			console.error(`[SCSS] Error compiling ${scssInputPath}: ${error}`);
-		}
-	});
-
-	const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 	return {
 		dir: {
