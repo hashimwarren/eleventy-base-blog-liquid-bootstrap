@@ -4,15 +4,17 @@
 	"description": "A starter repository for a blog web site using the Eleventy site generator.",
 	"type": "module",
 	"scripts": {
-		"build": "npm run purgecss && eleventy",
+		"build": "postcss css/tailwind.css -o css/style.css && npm run purgecss && eleventy",
+		"build:css": "postcss css/tailwind.css -o css/style.css",
+		"watch:css": "postcss css/tailwind.css -o css/style.css --watch",
 		"build-nocolor": "cross-env NODE_DISABLE_COLORS=1 npx @11ty/eleventy",
 		"build-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/",
-		"start": "npx @11ty/eleventy --serve --quiet",
+		"start": "npm run watch:css & npx @11ty/eleventy --serve --quiet",
 		"start-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/ --serve --quiet",
 		"debug": "cross-env DEBUG=Eleventy* npx @11ty/eleventy",
 		"debugstart": "cross-env DEBUG=Eleventy* npx @11ty/eleventy --serve --quiet",
 		"benchmark": "cross-env DEBUG=Eleventy:Benchmark* npx @11ty/eleventy",
-		"purgecss": "purgecss --config purgecss.config.js -o ./css/"
+		"purgecss": "purgecss --css css/style.css --config purgecss.config.js -o css/"
 	},
 	"repository": {
 		"type": "git",
@@ -41,16 +43,17 @@
 		"@11ty/eleventy-navigation": "^1.0.4",
 		"@11ty/eleventy-plugin-rss": "^2.0.4",
 		"@11ty/eleventy-plugin-syntaxhighlight": "^5.0.1",
+		"autoprefixer": "^10.4.21",
 		"cross-env": "^7.0.3",
 		"luxon": "^3.6.1",
+		"postcss": "^8.5.3",
 		"prismjs": "^1.30.0",
+		"tailwindcss": "^4.1.7",
 		"zod": "^3.24.4",
 		"zod-validation-error": "^3.4.1"
 	},
 	"dependencies": {
 		"@popperjs/core": "^2.11.8",
-		"@zachleat/heading-anchors": "^1.0.3",
-		"bootstrap": "^5.3.6",
-		"sass": "^1.88.0"
+		"@zachleat/heading-anchors": "^1.0.3"
 	}
 }

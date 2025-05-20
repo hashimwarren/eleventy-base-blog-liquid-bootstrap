@@ -8,10 +8,7 @@
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
 
 		<!-- Include Bootstrap CSS -->
-		<link rel="stylesheet" href="/css/bootstrap.css">
-
-		<!-- Include Bootstrap JS -->
-		<script src="/js/bootstrap.bundle.min.js" defer></script>
+		<link rel="stylesheet" href="/css/style.css">
 
 		<!-- Add viewport meta tag -->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,7 +36,7 @@
 		{% include "components/navbar.liquid" %}
 		<!-- Include Sidebar -->
 		{% include "components/sidebar.liquid" %}
-		<div class="container-lg">
+		<div class="max-w-screen-lg mx-auto px-4">
 			{{ content }}
 		</div>
 		<!-- Include Footer -->

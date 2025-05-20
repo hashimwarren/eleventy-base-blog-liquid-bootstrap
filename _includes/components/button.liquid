@@ -1,3 +1,27 @@
-<a href="{{ url }}" class="btn {{ type | default: 'btn-primary' }}">
+{% assign btn_type = type | default: 'btn-primary' %}
+{% assign base_classes = "font-semibold py-2 px-4 rounded shadow hover:shadow-md transition duration-150 ease-in-out" %}
+{% assign link_classes = "text-blue-500 hover:text-blue-700 underline" %}
+
+{% if btn_type == 'btn-primary' %}
+  <a href="{{ url }}" class="{{ base_classes }} bg-blue-500 hover:bg-blue-700 text-white">
+{% elsif btn_type == 'btn-secondary' %}
+  <a href="{{ url }}" class="{{ base_classes }} bg-gray-500 hover:bg-gray-700 text-white">
+{% elsif btn_type == 'btn-success' %}
+  <a href="{{ url }}" class="{{ base_classes }} bg-green-500 hover:bg-green-700 text-white">
+{% elsif btn_type == 'btn-danger' %}
+  <a href="{{ url }}" class="{{ base_classes }} bg-red-500 hover:bg-red-700 text-white">
+{% elsif btn_type == 'btn-warning' %}
+  <a href="{{ url }}" class="{{ base_classes }} bg-yellow-500 hover:bg-yellow-700 text-black">
+{% elsif btn_type == 'btn-info' %}
+  <a href="{{ url }}" class="{{ base_classes }} bg-blue-400 hover:bg-blue-600 text-white">
+{% elsif btn_type == 'btn-light' %}
+  <a href="{{ url }}" class="{{ base_classes }} bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-300">
+{% elsif btn_type == 'btn-dark' %}
+  <a href="{{ url }}" class="{{ base_classes }} bg-gray-800 hover:bg-gray-900 text-white">
+{% elsif btn_type == 'btn-link' %}
+  <a href="{{ url }}" class="{{ link_classes }}">
+{% else %}
+  <a href="{{ url }}" class="{{ base_classes }} bg-blue-500 hover:bg-blue-700 text-white">
+{% endif %}
   {{ label | default: 'Click Me' }}
 </a>

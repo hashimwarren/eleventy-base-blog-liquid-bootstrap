@@ -1,8 +1,13 @@
 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
+  <ol class="flex flex-wrap text-sm text-gray-700">
     {% for crumb in breadcrumbs %}
-    <li class="breadcrumb-item {% if forloop.last %}active{% endif %}" {% if forloop.last %}aria-current="page"{% endif %}>
-      {% if not forloop.last %}<a href="{{ crumb.url }}">{{ crumb.label }}</a>{% else %}{{ crumb.label }}{% endif %}
+    <li class="flex items-center {% if forloop.last %}text-gray-500{% else %}text-blue-600 hover:text-blue-800{% endif %}">
+      {% if not forloop.last %}
+        <a href="{{ crumb.url }}">{{ crumb.label }}</a>
+        <span class="mx-2 text-gray-400">/</span> {# Separator #}
+      {% else %}
+        <span {% if forloop.last %}aria-current="page"{% endif %}>{{ crumb.label }}</span>
+      {% endif %}
     </li>
     {% endfor %}
   </ol>
